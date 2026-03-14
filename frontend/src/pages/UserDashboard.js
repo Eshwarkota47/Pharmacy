@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import { useAuth } from '../AuthContext';
+import AIGuidancePanel, { generateWorkflowGuidance } from '../components/AIGuidancePanel';
 
 const UserDashboard = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -179,6 +180,15 @@ const UserDashboard = () => {
         <div className="grid lg:grid-cols-3 gap-6">
           {/* Left Column */}
           <div className="lg:col-span-2 space-y-6">
+            {/* AI Workflow Guidance */}
+            {generateWorkflowGuidance({
+              lowStockCount: lowStockItems.length,
+              pendingQueue,
+              timeOfDay: new Date().getHours()
+            }).map((guidance, index) => (
+              <AIGuidancePanel key={index} {...guidance} />
+            ))}
+
             {/* Frequently Checked Medicines */}
             <div className="bg-white rounded-xl shadow-md p-6">
               <div className="flex items-center justify-between mb-4">
