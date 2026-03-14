@@ -167,6 +167,14 @@ export const FulfillmentStatusBadge = ({ status }) => {
           label: 'CONFIRMED',
           border: 'border-blue-300'
         };
+      case 'in_progress':
+        return {
+          bg: 'bg-blue-100',
+          text: 'text-blue-800',
+          icon: '▶',
+          label: 'IN PROGRESS',
+          border: 'border-blue-300'
+        };
       case 'completed':
         return {
           bg: 'bg-green-100',

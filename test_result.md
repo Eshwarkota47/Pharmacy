@@ -326,20 +326,23 @@ frontend:
         agent: "testing"
         comment: "✓ PASSED - 'Create Hold Request' button in search results navigates to pharmacy details page (/pharmacy/[id]). Clicking 'Queue Dispense' button opens 'Fulfill Prescription' modal with form fields: Medicine (pre-filled), Quantity (number input), Pickup/Collection Time (datetime picker), Staff Notes (textarea). Form has Cancel and 'Add to Queue' buttons. Modal styling professional with backdrop overlay."
 
-  - task: "Fulfillment Requests Page Display"
+  - task: "Enhanced Fulfillment Requests Module"
     implemented: true
     working: true
-    file: "/app/frontend/src/pages/UserReservations.js"
+    file: "/app/frontend/src/pages/UserReservations.js, /app/frontend/src/components/StatusBadges.js"
     stuck_count: 0
     priority: "high"
     needs_retesting: false
     status_history:
       - working: "NA"
         agent: "testing"
-        comment: "Testing fulfillment requests page"
+        comment: "Testing enhanced fulfillment requests module with new features"
+      - working: false
+        agent: "testing"
+        comment: "✗ CRITICAL BUG: Page shows 0 requests despite database having 7 reservations. API endpoint mismatch - frontend calling /api/reservations but backend expects /api/user/reservations. Also using wrong user property (user.id instead of user.user_id). Status badge missing 'in_progress' case."
       - working: true
         agent: "testing"
-        comment: "✓ PASSED - Fulfillment Requests page (/reservations) loads correctly. Displays list of requests with status badges (Pending, Confirmed, Completed). Each request shows medicine name, pharmacy source, location, contact, quantity, fulfillment time, creation date, and staff notes. If no requests, shows appropriate empty state. Data displayed is realistic and well-formatted."
+        comment: "✓ BUGS FIXED & TESTED - Fixed API endpoint from /api/reservations to /api/user/reservations. Fixed user parameter from user.id to user.user_id. Added missing 'in_progress' case to FulfillmentStatusBadge. COMPREHENSIVE TESTING COMPLETE: ✓ Summary cards display correctly (7 Total, 1 Pending, 0 In Progress, 3 Completed, 3 Cancelled) with proper border colors (gray, yellow, blue, green, red). ✓ Filter functionality works (ALL, PENDING, IN PROGRESS, COMPLETED, CANCELLED). ✓ Sort functionality works (Newest First, Oldest First). ✓ Request cards display all required info: medicine name, status badge, request ID, source name, location, contact, quantity, fulfillment time, request created date, staff notes. ✓ Action buttons context-aware: Pending shows Mark In Progress (blue), Mark Fulfilled (green), Cancel (red). ✓ Mark In Progress workflow: status updates, badge changes to blue IN PROGRESS with ▶ icon, action buttons update to show only Mark Fulfilled + Cancel. ✓ Fulfillment modal opens with fields: medicine name, quantity, Fulfilled By (optional), Fulfillment Notes (optional), Cancel and Confirm Fulfillment buttons. ✓ Complete fulfillment workflow: modal submission updates status to COMPLETED, shows ✓ Fulfilled disabled button in green. ✓ Empty state displays correctly with icon and appropriate messages. ✓ B2B operational terminology throughout (Fulfillment Requests, medicine hold requests, dispense queue). ✓ Visual design clean and professional. ✓ Mobile responsive. ✓ No critical console errors."
 
   - task: "Data Realism - Medicines & Pharmacies"
     implemented: true
@@ -389,8 +392,8 @@ frontend:
 
 metadata:
   created_by: "testing_agent"
-  version: "1.1"
-  test_sequence: 2
+  version: "1.2"
+  test_sequence: 3
   last_updated: "2026-03-14"
 
 test_plan:
@@ -398,7 +401,7 @@ test_plan:
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
-  notes: "All comprehensive e2e testing completed successfully. All 17 tasks passed (10 core features + 7 AI Guidance Layer features)."
+  notes: "Enhanced Fulfillment Requests module tested comprehensively. Found and fixed critical bugs: API endpoint mismatch and missing status badge case. All features working correctly."
 
 agent_communication:
   - agent: "testing"
@@ -414,4 +417,4 @@ agent_communication:
   - agent: "testing"
     message: "AI GUIDANCE LAYER TESTING COMPLETE - All 7 AI guidance features PASSED. Dashboard shows time-based workflow guidance (Morning Workflow Guidance with blue/info styling). Search results display AI guidance panels on first 3 results with contextual recommendations ('Recommended Dispensing Source' for open pharmacies with stock). Urgent mode shows urgent-specific guidance with orange/warning styling ('Urgent Alternative Available'). No-stock scenario displays purple substitute guidance panel with 4-step action plan. AI Medicine Verification Summary appears in all detailed views (101 summaries for Paracetamol). All visual elements correct: color-coding (blue/orange/red/green/purple), AI GUIDANCE badges, robot emojis, recommendations, and numbered next steps. No console errors detected."
   - agent: "testing"
-    message: "COMPREHENSIVE E2E TESTING COMPLETE (March 14, 2026) - Performed exhaustive testing covering: A) Landing/Home page (hero, theme section, CTAs, navigation), B) Authentication (signup, staff/pharmacy/admin login, invalid credentials, logout), C) Medicine Search & Autocomplete (dropdown with 6 suggestions for 'para', keyboard navigation, click-outside behavior), D) Search Results (101 sources for Paracetamol, stock badges, pharmacy names, distances, quantities, AI guidance panels), E) Fulfillment Requests (workflow from search → pharmacy details → modal form), F) Pharmacy Dashboard (53 medicines, 13 low stock, inventory table with realistic data), G) Admin Dashboard (platform analytics), H) Navigation & Consistency (MediGuide AI branding, role-based navbar, all links working), I) Responsiveness (mobile viewport tested), J) Data Realism (medicine names: Paracetamol/Crocin/Tylenol, pharmacies: QuickMeds/HealthPlus, realistic quantities, dosages in mg, localities with Place/Nagar, prices in ₹). ALL TESTS PASSED. Console logs show only minor React Router warnings and CDN endpoint failures (non-critical). No JavaScript errors or API failures detected."
+    message: "ENHANCED FULFILLMENT REQUESTS MODULE TESTING (March 14, 2026) - Comprehensive testing of new features: summary cards, filters, sort, action buttons, status updates, fulfillment modal. CRITICAL BUGS FOUND AND FIXED: 1) API endpoint mismatch - frontend was calling /api/reservations but backend expects /api/user/reservations, causing 0 requests to display despite 7 in database. Fixed endpoint and user parameter (user.id → user.user_id). 2) FulfillmentStatusBadge component missing 'in_progress' case - would display gray/unknown styling instead of blue. Added proper case with blue styling and ▶ icon. AFTER FIXES: All features working correctly - summary cards (correct counts and border colors), filters (all 5 work), sort (newest/oldest), request cards (display all required info), action buttons (context-aware based on status), status update workflows (mark in progress → mark fulfilled → completed), fulfillment modal (all fields present), empty states, B2B terminology, visual consistency, mobile responsive. NO CRITICAL ERRORS."

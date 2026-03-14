@@ -80,6 +80,11 @@ class SubstituteRequest(BaseModel):
     composition: str
     dosage: str
 
+class FulfillmentUpdateRequest(BaseModel):
+    status: str
+    fulfilled_by: Optional[str] = None
+    notes: Optional[str] = None
+
 # Helper functions
 def calculate_distance(lat1, lon1, lat2, lon2):
     """Calculate distance between two coordinates using Haversine formula"""
@@ -604,19 +609,31 @@ def get_pharmacy_reservations(pharmacy_id: str = Query(...)):
     return {"reservations": reservations}
 
 @app.put("/api/pharmacy/reservations/{reservation_id}/status")
-def update_reservation_status(reservation_id: str, status: str = Query(...)):
+@app.put("/api/reservations/{reservation_id}/status")
+def update_reservation_status(reservation_id: str, request: FulfillmentUpdateRequest):
+    """Update fulfillment request status with optional fulfillment details"""
+    update_data = {
+        "status": request.status,
+        "updated_at": datetime.now().isoformat()
+    }
+    
+    # Add fulfillment details if marking as completed
+    if request.status == "completed" or request.status == "fulfilled":
+        if request.fulfilled_by:
+            update_data["fulfilled_by"] = request.fulfilled_by
+        if request.notes:
+            update_data["fulfillment_notes"] = request.notes
+        update_data["fulfilled_at"] = datetime.now().isoformat()
+    
     result = reservations_collection.update_one(
         {"reservation_id": reservation_id},
-        {"$set": {
-            "status": status,
-            "updated_at": datetime.now().isoformat()
-        }}
+        {"$set": update_data}
     )
     
     if result.matched_count == 0:
-        raise HTTPException(status_code=404, detail="Reservation not found")
+        raise HTTPException(status_code=404, detail="Fulfillment request not found")
     
-    return {"success": True, "message": "Reservation status updated"}
+    return {"success": True, "message": "Fulfillment request status updated"}
 
 @app.put("/api/pharmacy/status")
 def update_pharmacy_status(request: PharmacyStatusRequest):
