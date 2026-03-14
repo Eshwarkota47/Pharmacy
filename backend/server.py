@@ -37,6 +37,7 @@ medicines_collection = db.medicines
 inventory_collection = db.inventory
 reservations_collection = db.reservations
 substitute_mappings_collection = db.substitute_mappings
+inventory_movements_collection = db.inventory_movements
 
 # Pydantic models
 class LoginRequest(BaseModel):
@@ -85,6 +86,13 @@ class FulfillmentUpdateRequest(BaseModel):
     fulfilled_by: Optional[str] = None
     notes: Optional[str] = None
 
+class DirectDispenseRequest(BaseModel):
+    medicine_id: str
+    pharmacy_id: str
+    quantity: int
+    dispensed_by: str
+    notes: Optional[str] = None
+
 # Helper functions
 def calculate_distance(lat1, lon1, lat2, lon2):
     """Calculate distance between two coordinates using Haversine formula"""
@@ -110,6 +118,127 @@ def is_pharmacy_open(operating_hours, is_24x7):
     current_hour = datetime.now().hour
     if 8 <= current_hour < 22:  # Assume most pharmacies open 8am-10pm
         return True
+
+def log_inventory_movement(medicine_id, pharmacy_id, action_type, quantity_change, remaining_quantity, handled_by, notes=None):
+    """Log an inventory movement/transaction"""
+    movement = {
+        "movement_id": str(uuid.uuid4()),
+        "medicine_id": medicine_id,
+        "pharmacy_id": pharmacy_id,
+        "action_type": action_type,  # fulfilled, dispensed, adjustment, restored
+        "quantity_change": quantity_change,  # negative for reduction
+        "remaining_quantity": remaining_quantity,
+        "handled_by": handled_by,
+        "notes": notes,
+        "timestamp": datetime.now().isoformat()
+    }
+    inventory_movements_collection.insert_one(movement)
+    return movement
+
+def reduce_stock(medicine_id, pharmacy_id, quantity, action_type, handled_by, notes=None):
+    """Reduce stock and log the movement"""
+    # Get current inventory
+    inventory = inventory_collection.find_one({
+        "medicine_id": medicine_id,
+        "pharmacy_id": pharmacy_id
+    })
+    
+    if not inventory:
+        raise HTTPException(status_code=404, detail="Inventory record not found")
+    
+    current_quantity = inventory.get("quantity", 0)
+    
+    # Check if sufficient stock
+    if current_quantity < quantity:
+        raise HTTPException(
+            status_code=400, 
+            detail=f"Insufficient stock. Available: {current_quantity}, Requested: {quantity}"
+        )
+    
+    # Calculate new quantity
+    new_quantity = current_quantity - quantity
+    
+    # Determine new status
+    if new_quantity == 0:
+        new_status = "out_of_stock"
+    elif new_quantity <= 10:  # Low stock threshold
+        new_status = "low_stock"
+    else:
+        new_status = "in_stock"
+    
+    # Update inventory
+    inventory_collection.update_one(
+        {"medicine_id": medicine_id, "pharmacy_id": pharmacy_id},
+        {"$set": {
+            "quantity": new_quantity,
+            "status": new_status,
+            "last_updated": datetime.now().isoformat()
+        }}
+    )
+    
+    # Log movement
+    log_inventory_movement(
+        medicine_id=medicine_id,
+        pharmacy_id=pharmacy_id,
+        action_type=action_type,
+        quantity_change=-quantity,
+        remaining_quantity=new_quantity,
+        handled_by=handled_by,
+        notes=notes
+    )
+    
+    return {
+        "previous_quantity": current_quantity,
+        "new_quantity": new_quantity,
+        "new_status": new_status
+    }
+
+def restore_stock(medicine_id, pharmacy_id, quantity, handled_by, notes=None):
+    """Restore stock (e.g., on cancellation) and log the movement"""
+    inventory = inventory_collection.find_one({
+        "medicine_id": medicine_id,
+        "pharmacy_id": pharmacy_id
+    })
+    
+    if not inventory:
+        return None
+    
+    current_quantity = inventory.get("quantity", 0)
+    new_quantity = current_quantity + quantity
+    
+    # Determine new status
+    if new_quantity <= 10:
+        new_status = "low_stock"
+    else:
+        new_status = "in_stock"
+    
+    # Update inventory
+    inventory_collection.update_one(
+        {"medicine_id": medicine_id, "pharmacy_id": pharmacy_id},
+        {"$set": {
+            "quantity": new_quantity,
+            "status": new_status,
+            "last_updated": datetime.now().isoformat()
+        }}
+    )
+    
+    # Log movement
+    log_inventory_movement(
+        medicine_id=medicine_id,
+        pharmacy_id=pharmacy_id,
+        action_type="restored",
+        quantity_change=quantity,
+        remaining_quantity=new_quantity,
+        handled_by=handled_by,
+        notes=notes
+    )
+    
+    return {
+        "previous_quantity": current_quantity,
+        "new_quantity": new_quantity,
+        "new_status": new_status
+    }
+
     return False
 
 async def get_ai_substitutes(medicine_name, generic_name, composition, dosage):
@@ -612,6 +741,11 @@ def get_pharmacy_reservations(pharmacy_id: str = Query(...)):
 @app.put("/api/reservations/{reservation_id}/status")
 def update_reservation_status(reservation_id: str, request: FulfillmentUpdateRequest):
     """Update fulfillment request status with optional fulfillment details"""
+    # Get the reservation first
+    reservation = reservations_collection.find_one({"reservation_id": reservation_id})
+    if not reservation:
+        raise HTTPException(status_code=404, detail="Fulfillment request not found")
+    
     update_data = {
         "status": request.status,
         "updated_at": datetime.now().isoformat()
@@ -619,21 +753,50 @@ def update_reservation_status(reservation_id: str, request: FulfillmentUpdateReq
     
     # Add fulfillment details if marking as completed
     if request.status == "completed" or request.status == "fulfilled":
+        # Reduce stock when fulfilling
+        try:
+            stock_result = reduce_stock(
+                medicine_id=reservation.get("medicine_id"),
+                pharmacy_id=reservation.get("pharmacy_id"),
+                quantity=reservation.get("quantity", 1),
+                action_type="fulfilled",
+                handled_by=request.fulfilled_by or "Staff",
+                notes=request.notes
+            )
+            
+            # Add stock update info to response
+            update_data["stock_updated"] = True
+            update_data["previous_stock"] = stock_result["previous_quantity"]
+            update_data["remaining_stock"] = stock_result["new_quantity"]
+        except HTTPException as e:
+            # If stock check fails, don't allow fulfillment
+            raise e
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=f"Failed to update stock: {str(e)}")
+        
         if request.fulfilled_by:
             update_data["fulfilled_by"] = request.fulfilled_by
         if request.notes:
             update_data["fulfillment_notes"] = request.notes
         update_data["fulfilled_at"] = datetime.now().isoformat()
     
+    # Restore stock if cancelling after in_progress
+    elif request.status == "cancelled" and reservation.get("status") in ["in_progress", "confirmed"]:
+        # Optional: restore stock if it was reserved
+        # For now, we only reduce stock on actual fulfillment
+        pass
+    
     result = reservations_collection.update_one(
         {"reservation_id": reservation_id},
         {"$set": update_data}
     )
     
-    if result.matched_count == 0:
-        raise HTTPException(status_code=404, detail="Fulfillment request not found")
+    response = {"success": True, "message": "Fulfillment request status updated"}
+    if "remaining_stock" in update_data:
+        response["remaining_stock"] = update_data["remaining_stock"]
+        response["stock_status"] = "Inventory updated"
     
-    return {"success": True, "message": "Fulfillment request status updated"}
+    return response
 
 @app.put("/api/pharmacy/status")
 def update_pharmacy_status(request: PharmacyStatusRequest):
@@ -665,6 +828,97 @@ def get_pharmacy_analytics(pharmacy_id: str = Query(...)):
     })
     
     # Today's reservations
+
+# Direct Dispense Endpoint
+@app.post("/api/inventory/dispense")
+def direct_dispense(request: DirectDispenseRequest):
+    """Directly dispense medicine from inventory"""
+    try:
+        stock_result = reduce_stock(
+            medicine_id=request.medicine_id,
+            pharmacy_id=request.pharmacy_id,
+            quantity=request.quantity,
+            action_type="dispensed",
+            handled_by=request.dispensed_by,
+            notes=request.notes
+        )
+        
+        return {
+            "success": True,
+            "message": "Medicine dispensed successfully",
+            "previous_quantity": stock_result["previous_quantity"],
+            "remaining_quantity": stock_result["new_quantity"],
+            "status": stock_result["new_status"]
+        }
+    except HTTPException as e:
+        raise e
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to dispense medicine: {str(e)}")
+
+# Inventory Movements History
+@app.get("/api/inventory/movements")
+def get_inventory_movements(
+    pharmacy_id: Optional[str] = None,
+    medicine_id: Optional[str] = None,
+    limit: int = Query(50, le=200)
+):
+    """Get inventory movement history"""
+    query = {}
+    if pharmacy_id:
+        query["pharmacy_id"] = pharmacy_id
+    if medicine_id:
+        query["medicine_id"] = medicine_id
+    
+    movements = list(inventory_movements_collection.find(
+        query,
+        {"_id": 0}
+    ).sort("timestamp", -1).limit(limit))
+    
+    # Enrich with medicine and pharmacy names
+    for movement in movements:
+        medicine = medicines_collection.find_one(
+            {"medicine_id": movement["medicine_id"]},
+            {"_id": 0, "brand": 1}
+        )
+        pharmacy = pharmacies_collection.find_one(
+            {"pharmacy_id": movement["pharmacy_id"]},
+            {"_id": 0, "name": 1}
+        )
+        if medicine:
+            movement["medicine_name"] = medicine.get("brand", "Unknown")
+        if pharmacy:
+            movement["pharmacy_name"] = pharmacy.get("name", "Unknown")
+    
+    return {"movements": movements}
+
+# Stock Validation Endpoint
+@app.get("/api/inventory/check-stock")
+def check_stock_availability(medicine_id: str, pharmacy_id: str, quantity: int):
+    """Check if sufficient stock is available"""
+    inventory = inventory_collection.find_one({
+        "medicine_id": medicine_id,
+        "pharmacy_id": pharmacy_id
+    }, {"_id": 0})
+    
+    if not inventory:
+        return {
+            "available": False,
+            "current_stock": 0,
+            "requested": quantity,
+            "message": "Inventory record not found"
+        }
+    
+    current_stock = inventory.get("quantity", 0)
+    is_available = current_stock >= quantity
+    
+    return {
+        "available": is_available,
+        "current_stock": current_stock,
+        "requested": quantity,
+        "remaining_after": current_stock - quantity if is_available else None,
+        "message": "Sufficient stock available" if is_available else "Insufficient stock"
+    }
+
     today = datetime.now().date().isoformat()
     today_reservations = reservations_collection.count_documents({
         "pharmacy_id": pharmacy_id,
