@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, forwardRef, useImperativeHandle } from 'react';
 
 /**
  * MedicineSearchInput - Autocomplete search component for medicine lookup
  * Supports brand name, generic name, and partial text matching
  */
-const MedicineSearchInput = ({ 
+const MedicineSearchInput = forwardRef(({ 
   value, 
   onChange, 
   onSelect,
@@ -12,7 +12,7 @@ const MedicineSearchInput = ({
   className = "",
   disabled = false,
   autoFocus = false
-}) => {
+}, ref) => {
   const [isOpen, setIsOpen] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -22,6 +22,15 @@ const MedicineSearchInput = ({
   const inputRef = useRef(null);
   const dropdownRef = useRef(null);
   const debounceTimer = useRef(null);
+
+  // Expose focus method to parent component
+  useImperativeHandle(ref, () => ({
+    focus: () => {
+      if (inputRef.current) {
+        inputRef.current.focus();
+      }
+    }
+  }));
 
   // Load recent searches from localStorage on mount
   useEffect(() => {
@@ -309,6 +318,8 @@ const MedicineSearchInput = ({
       )}
     </div>
   );
-};
+});
+
+MedicineSearchInput.displayName = 'MedicineSearchInput';
 
 export default MedicineSearchInput;

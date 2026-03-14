@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import { useAuth } from '../AuthContext';
@@ -13,6 +13,7 @@ const UserDashboard = () => {
   const [pendingQueue, setPendingQueue] = useState(0);
   const { user } = useAuth();
   const navigate = useNavigate();
+  const searchInputRef = useRef(null);
 
   useEffect(() => {
     // Fetch low stock items and recent activity
@@ -64,7 +65,20 @@ const UserDashboard = () => {
   ];
 
   const quickActions = [
-    { title: 'Urgent Lookup', icon: '🚨', color: 'red', action: () => { setEmergencyMode(true); document.getElementById('search-input').focus(); } },
+    { 
+      title: 'Urgent Lookup', 
+      icon: '🚨', 
+      color: 'red', 
+      action: () => { 
+        setEmergencyMode(true); 
+        // Focus the search input safely
+        setTimeout(() => {
+          if (searchInputRef.current) {
+            searchInputRef.current.focus();
+          }
+        }, 100);
+      } 
+    },
     { title: 'AI Substitutes', icon: '🤖', color: 'purple', action: () => navigate('/search?query=&emergency=false') },
     { title: 'Check Queue', icon: '📋', color: 'blue', action: () => navigate('/reservations') },
     { title: 'Low Stock', icon: '⚠️', color: 'orange', action: () => {} },
@@ -132,6 +146,7 @@ const UserDashboard = () => {
               <div className="flex items-end gap-3">
                 <div className="flex-1">
                   <MedicineSearchInput
+                    ref={searchInputRef}
                     value={searchQuery}
                     onChange={setSearchQuery}
                     onSelect={(medicine) => {
