@@ -71,8 +71,8 @@ const Signup = () => {
       <div className="flex items-center justify-center px-4 py-12">
         <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8">
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-900 mb-2">Create Account</h2>
-            <p className="text-gray-600">Join MediFind AI today</p>
+            <h2 className="text-3xl font-bold text-gray-900 mb-2">Staff Registration</h2>
+            <p className="text-gray-600">Join MediGuide AI healthcare workflow platform</p>
           </div>
 
           {error && (
@@ -132,7 +132,7 @@ const Signup = () => {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                I am a
+                Your Role
               </label>
               <select
                 name="role"
@@ -141,8 +141,8 @@ const Signup = () => {
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition"
                 data-testid="signup-role-select"
               >
-                <option value="user">Patient / User</option>
-                <option value="pharmacy">Pharmacy Owner</option>
+                <option value="user">Pharmacist / Clinical Staff / Nurse</option>
+                <option value="pharmacy">Pharmacy Manager / Inventory Manager</option>
               </select>
             </div>
 

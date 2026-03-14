@@ -54,13 +54,14 @@ const UserReservations = () => {
       <Navbar />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">My Reservations</h1>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">Prescription Dispense Queue</h1>
+        <p className="text-gray-600 mb-8">Track prescriptions in fulfillment workflow</p>
 
         {reservations.length === 0 ? (
           <div className="bg-white rounded-2xl shadow-md p-12 text-center">
             <div className="text-6xl mb-4">📋</div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-2">No Reservations Yet</h3>
-            <p className="text-gray-600">You haven't made any medicine reservations.</p>
+            <h3 className="text-2xl font-bold text-gray-900 mb-2">No Items in Queue</h3>
+            <p className="text-gray-600">No prescriptions currently queued for dispensing.</p>
           </div>
         ) : (
           <div className="space-y-4">
@@ -76,10 +77,10 @@ const UserReservations = () => {
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="space-y-2 text-sm">
                     <p className="text-gray-600">
-                      <span className="font-semibold">Pharmacy:</span> {reservation.pharmacy?.name}
+                      <span className="font-semibold">Location:</span> {reservation.pharmacy?.name}
                     </p>
                     <p className="text-gray-600">
-                      <span className="font-semibold">Location:</span> {reservation.pharmacy?.locality}
+                      <span className="font-semibold">Address:</span> {reservation.pharmacy?.locality}
                     </p>
                     <p className="text-gray-600">
                       <span className="font-semibold">Contact:</span> {reservation.pharmacy?.contact}
@@ -90,14 +91,14 @@ const UserReservations = () => {
                       <span className="font-semibold">Quantity:</span> {reservation.quantity}
                     </p>
                     <p className="text-gray-600">
-                      <span className="font-semibold">Pickup Time:</span> {new Date(reservation.pickup_time).toLocaleString()}
+                      <span className="font-semibold">Collection Time:</span> {new Date(reservation.pickup_time).toLocaleString()}
                     </p>
                     <p className="text-gray-600">
-                      <span className="font-semibold">Reserved On:</span> {new Date(reservation.created_at).toLocaleDateString()}
+                      <span className="font-semibold">Queued On:</span> {new Date(reservation.created_at).toLocaleDateString()}
                     </p>
                     {reservation.notes && (
                       <p className="text-gray-600">
-                        <span className="font-semibold">Notes:</span> {reservation.notes}
+                        <span className="font-semibold">Staff Notes:</span> {reservation.notes}
                       </p>
                     )}
                   </div>

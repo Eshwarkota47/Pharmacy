@@ -77,11 +77,11 @@ const SearchResults = () => {
         {/* Header */}
         <div className="mb-6">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Search Results for '{query}'
+            Availability Results for '{query}'
           </h1>
           <p className="text-gray-600">
-            Found {results.length} results
-            {emergencyMode && <span className="ml-2 text-red-600 font-semibold">🚨 EMERGENCY MODE</span>}
+            Found {results.length} inventory locations
+            {emergencyMode && <span className="ml-2 text-red-600 font-semibold">🚨 URGENT DISPENSING MODE</span>}
           </p>
         </div>
 
@@ -132,15 +132,15 @@ const SearchResults = () => {
         {results.length === 0 ? (
           <div className="bg-white rounded-xl shadow-md p-12 text-center">
             <div className="text-6xl mb-4">😔</div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-2">No Results Found</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mb-2">No Stock Found</h3>
             <p className="text-gray-600 mb-6">
-              We couldn't find any pharmacies with '{query}' in stock.
+              No inventory locations currently have '{query}' in stock.
             </p>
             <button
               onClick={() => navigate('/dashboard')}
               className="bg-primary-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary-700 transition"
             >
-              Try Another Search
+              Try Another Lookup
             </button>
           </div>
         ) : (
@@ -150,7 +150,7 @@ const SearchResults = () => {
                 <div className="flex items-center space-x-4">
                   <span className="text-4xl">🚨</span>
                   <div>
-                    <h3 className="text-xl font-bold mb-1">Fastest Reachable Pharmacy</h3>
+                    <h3 className="text-xl font-bold mb-1">Fastest Available Location</h3>
                     <p className="text-red-100">{results[0].pharmacy_name} - {results[0].distance} km away</p>
                   </div>
                 </div>
@@ -234,12 +234,12 @@ const SearchResults = () => {
                       disabled={result.inventory.status === 'out_of_stock'}
                       data-testid="reserve-btn"
                     >
-                      Reserve
+                      Fulfill Prescription
                     </button>
                     <button
                       className="w-full px-4 py-3 bg-gray-100 text-gray-700 rounded-lg font-semibold hover:bg-gray-200 transition"
                     >
-                      Navigate →
+                      Check Location →
                     </button>
                   </div>
                 </div>

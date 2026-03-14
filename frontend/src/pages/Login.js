@@ -40,8 +40,8 @@ const Login = () => {
       <div className="flex items-center justify-center px-4 py-12">
         <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8">
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-900 mb-2">Welcome Back</h2>
-            <p className="text-gray-600">Sign in to your account</p>
+            <h2 className="text-3xl font-bold text-gray-900 mb-2">Staff Login</h2>
+            <p className="text-gray-600">Access your healthcare workflow assistant</p>
           </div>
 
           {error && (
@@ -52,9 +52,9 @@ const Login = () => {
 
           {/* Demo Credentials */}
           <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-            <p className="text-sm font-semibold text-blue-900 mb-2">Demo Credentials:</p>
+            <p className="text-sm font-semibold text-blue-900 mb-2">Demo Access Credentials:</p>
             <div className="text-xs text-blue-800 space-y-1">
-              <p>User: user@demo.com / password123</p>
+              <p>Staff: user@demo.com / password123</p>
               <p>Pharmacy: pharmacy@demo.com / password123</p>
               <p>Admin: admin@demo.com / password123</p>
             </div>

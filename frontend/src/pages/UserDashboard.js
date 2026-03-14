@@ -24,9 +24,9 @@ const UserDashboard = () => {
   ];
 
   const quickActions = [
-    { title: 'Find Medicine', icon: '🔍', action: () => document.getElementById('search-input').focus() },
-    { title: 'My Reservations', icon: '📋', action: () => navigate('/reservations') },
-    { title: 'Nearby Pharmacies', icon: '📍', action: () => setSearchQuery('') },
+    { title: 'Lookup Medicine', icon: '🔍', action: () => document.getElementById('search-input').focus() },
+    { title: 'Dispense Queue', icon: '📋', action: () => navigate('/reservations') },
+    { title: 'Check Inventory', icon: '📍', action: () => setSearchQuery('') },
   ];
 
   return (
@@ -37,9 +37,9 @@ const UserDashboard = () => {
         {/* Welcome Section */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Welcome back, {user?.name}! 👋
+            Welcome, {user?.name} 👋
           </h1>
-          <p className="text-gray-600">Find medicines quickly and easily</p>
+          <p className="text-gray-600">Pharmacy Staff Workflow Assistant</p>
         </div>
 
         {/* Search Section */}
@@ -47,7 +47,7 @@ const UserDashboard = () => {
           <form onSubmit={handleSearch} className="space-y-6">
             <div>
               <label className="block text-lg font-semibold text-gray-900 mb-4">
-                Search for Medicine
+                Medicine Lookup During Dispensing
               </label>
               <input
                 id="search-input"
@@ -60,14 +60,14 @@ const UserDashboard = () => {
               />
             </div>
 
-            {/* Emergency Mode Toggle */}
+            {/* Urgent Dispensing Mode Toggle */}
             <div className="flex items-center justify-between p-4 bg-red-50 border-2 border-red-200 rounded-xl">
               <div className="flex items-center space-x-3">
                 <span className="text-2xl">🚨</span>
                 <div>
-                  <div className="font-semibold text-gray-900">Emergency Mode</div>
+                  <div className="font-semibold text-gray-900">Urgent Dispensing Mode</div>
                   <div className="text-sm text-gray-600">
-                    Priority for open pharmacies with immediate availability
+                    Priority routing for critical prescriptions with immediate availability
                   </div>
                 </div>
               </div>
@@ -92,7 +92,7 @@ const UserDashboard = () => {
               className="w-full bg-primary-600 text-white py-4 rounded-xl text-lg font-semibold hover:bg-primary-700 transition shadow-lg hover:shadow-xl"
               data-testid="search-submit-button"
             >
-              🔍 Search Medicine
+              🔍 Check Availability
             </button>
           </form>
         </div>
@@ -100,7 +100,7 @@ const UserDashboard = () => {
         <div className="grid md:grid-cols-2 gap-8">
           {/* Quick Actions */}
           <div className="bg-white rounded-2xl shadow-md p-6">
-            <h2 className="text-xl font-bold text-gray-900 mb-4">Quick Actions</h2>
+            <h2 className="text-xl font-bold text-gray-900 mb-4">Quick Workflow Actions</h2>
             <div className="space-y-3">
               {quickActions.map((action, index) => (
                 <button
@@ -117,7 +117,7 @@ const UserDashboard = () => {
 
           {/* Recent Searches */}
           <div className="bg-white rounded-2xl shadow-md p-6">
-            <h2 className="text-xl font-bold text-gray-900 mb-4">Recent Searches</h2>
+            <h2 className="text-xl font-bold text-gray-900 mb-4">Recent Lookups</h2>
             <div className="space-y-3">
               {recentSearches.map((medicine, index) => (
                 <button
@@ -143,18 +143,18 @@ const UserDashboard = () => {
         <div className="mt-8 grid md:grid-cols-3 gap-6">
           <div className="bg-gradient-to-br from-blue-500 to-blue-700 text-white rounded-2xl shadow-lg p-6">
             <div className="text-3xl mb-3">🏪</div>
-            <h3 className="text-xl font-bold mb-2">25+ Pharmacies</h3>
-            <p className="text-blue-100">Covering all major localities</p>
+            <h3 className="text-xl font-bold mb-2">25+ Locations</h3>
+            <p className="text-blue-100">Connected pharmacy and dispensary sites</p>
           </div>
           <div className="bg-gradient-to-br from-green-500 to-green-700 text-white rounded-2xl shadow-lg p-6">
             <div className="text-3xl mb-3">💊</div>
             <h3 className="text-xl font-bold mb-2">100+ Medicines</h3>
-            <p className="text-green-100">Across all categories</p>
+            <p className="text-green-100">Real-time inventory tracking</p>
           </div>
           <div className="bg-gradient-to-br from-purple-500 to-purple-700 text-white rounded-2xl shadow-lg p-6">
             <div className="text-3xl mb-3">🤖</div>
-            <h3 className="text-xl font-bold mb-2">AI Substitutes</h3>
-            <p className="text-purple-100">Smart recommendations</p>
+            <h3 className="text-xl font-bold mb-2">AI Guidance</h3>
+            <p className="text-purple-100">Smart substitute recommendations</p>
           </div>
         </div>
       </div>

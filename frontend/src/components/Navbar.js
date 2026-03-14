@@ -20,7 +20,7 @@ const Navbar = () => {
             <div className="flex items-center justify-center w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-700 rounded-lg">
               <span className="text-white font-bold text-xl">M</span>
             </div>
-            <span className="text-xl font-bold text-gray-900">MediFind AI</span>
+            <span className="text-xl font-bold text-gray-900">MediGuide AI</span>
           </Link>
 
           {/* Navigation Links */}
@@ -45,10 +45,10 @@ const Navbar = () => {
                 {user.role === 'user' && (
                   <>
                     <Link to="/dashboard" className="text-gray-700 hover:text-primary-600 transition">
-                      Dashboard
+                      Staff Dashboard
                     </Link>
                     <Link to="/reservations" className="text-gray-700 hover:text-primary-600 transition">
-                      My Reservations
+                      Dispense Queue
                     </Link>
                   </>
                 )}
