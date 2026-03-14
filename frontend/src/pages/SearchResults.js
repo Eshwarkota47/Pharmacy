@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import AIGuidancePanel, { generateSearchGuidance, generateNoStockGuidance } from '../components/AIGuidancePanel';
+import { StockBadge, SourceStatusBadge, DistanceBadge, MedicineInfoCard } from '../components/StatusBadges';
 
 const SearchResults = () => {
   const [searchParams] = useSearchParams();
@@ -238,30 +239,23 @@ const SearchResults = () => {
                     {/* Header Row */}
                     <div className="flex items-start justify-between pb-4 border-b border-gray-200">
                       <div className="flex-1">
-                        <div className="flex items-center gap-3 mb-2">
+                        <div className="flex items-center gap-2 mb-3 flex-wrap">
                           <h3 className="text-xl font-bold text-gray-900">
                             {result.pharmacy_name}
                           </h3>
-                          {result.is_open ? (
-                            <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-bold border border-green-300">
-                              OPEN NOW
-                            </span>
-                          ) : (
-                            <span className="px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-xs font-bold border border-gray-300">
-                              CLOSED
-                            </span>
-                          )}
+                          <SourceStatusBadge isOpen={result.is_open} />
                           {result.is_24x7 && (
                             <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-bold border border-blue-300">
                               24/7
                             </span>
                           )}
+                          <DistanceBadge distance={result.distance} />
                         </div>
                         <div className="text-sm text-gray-600 space-y-1">
                           <p className="flex items-center">
                             <span className="mr-2">📍</span>
                             <span className="font-semibold">Location:</span>
-                            <span className="ml-2">{result.locality} • {result.distance} km away</span>
+                            <span className="ml-2">{result.locality}</span>
                           </p>
                           <p className="flex items-center">
                             <span className="mr-2">📞</span>
@@ -287,63 +281,29 @@ const SearchResults = () => {
                       </div>
                     </div>
 
-                    {/* Medicine Details Section */}
+                    {/* Medicine & Stock Details Section */}
                     <div className="grid md:grid-cols-2 gap-6">
+                      {/* Medicine Info Card */}
+                      <MedicineInfoCard medicine={result.medicine} />
+                      
+                      {/* Stock Details */}
                       <div className="space-y-3">
                         <div>
-                          <div className="text-xs text-gray-500 font-semibold mb-1">MEDICINE DETAILS</div>
-                          <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-                            <div className="space-y-2">
-                              <div>
-                                <span className="text-xs text-gray-600 font-semibold">Brand Name:</span>
-                                <div className="text-base font-bold text-gray-900">{result.medicine.brand}</div>
-                              </div>
-                              <div>
-                                <span className="text-xs text-gray-600 font-semibold">Generic Name:</span>
-                                <div className="text-sm text-gray-800">{result.medicine.generic}</div>
-                              </div>
-                              <div>
-                                <span className="text-xs text-gray-600 font-semibold">Dosage:</span>
-                                <div className="text-sm text-gray-800">{result.medicine.dosage}</div>
-                              </div>
-                              <div>
-                                <span className="text-xs text-gray-600 font-semibold">Composition:</span>
-                                <div className="text-sm text-gray-800">{result.medicine.composition}</div>
-                              </div>
-                              <div>
-                                <span className="text-xs text-gray-600 font-semibold">Category:</span>
-                                <div className="text-sm text-gray-800">{result.medicine.category}</div>
-                              </div>
+                          <div className="text-xs text-gray-500 font-semibold mb-2">STOCK AVAILABILITY</div>
+                          <div className="bg-gray-50 p-4 rounded-lg border border-gray-200 space-y-3">
+                            <div className="flex items-center justify-between">
+                              <span className="text-sm text-gray-600 font-semibold">Status:</span>
+                              <StockBadge status={result.inventory.status} quantity={result.inventory.quantity} />
                             </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="space-y-3">
-                        <div>
-                          <div className="text-xs text-gray-500 font-semibold mb-1">STOCK INFORMATION</div>
-                          <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-                            <div className="space-y-2">
-                              <div>
-                                <span className="text-xs text-gray-600 font-semibold">Available Quantity:</span>
-                                <div className="text-2xl font-bold text-primary-600">{result.inventory.quantity} units</div>
-                              </div>
-                              <div>
-                                <span className="text-xs text-gray-600 font-semibold">Price per Unit:</span>
-                                <div className="text-lg font-bold text-gray-900">₹{result.inventory.price}</div>
-                              </div>
-                              <div>
-                                <span className="text-xs text-gray-600 font-semibold">Stock Status:</span>
-                                <div className="text-sm font-semibold text-gray-800">
-                                  {result.inventory.status === 'in_stock' ? 'Adequate Stock' :
-                                   result.inventory.status === 'low_stock' ? 'Limited Availability' : 'Currently Unavailable'}
-                                </div>
-                              </div>
-                              <div>
-                                <span className="text-xs text-gray-600 font-semibold">Source Pharmacy:</span>
-                                <div className="text-sm text-gray-800">{result.pharmacy_name}</div>
-                              </div>
+                            <div className="flex items-center justify-between">
+                              <span className="text-sm text-gray-600 font-semibold">Unit Price:</span>
+                              <span className="text-base font-bold text-gray-900">₹{result.inventory.price}</span>
                             </div>
+                            {result.inventory.last_updated && (
+                              <div className="text-xs text-gray-500">
+                                Last updated: {new Date(result.inventory.last_updated).toLocaleDateString()}
+                              </div>
+                            )}
                           </div>
                         </div>
                       </div>
