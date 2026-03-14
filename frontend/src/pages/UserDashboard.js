@@ -153,9 +153,9 @@ const UserDashboard = () => {
               <div className="flex items-center space-x-3">
                 <span className="text-xl">🚨</span>
                 <div>
-                  <div className="font-semibold text-gray-900 text-sm">Urgent Dispensing Mode</div>
+                  <div className="font-semibold text-gray-900 text-sm">Priority Dispense Mode</div>
                   <div className="text-xs text-gray-600">
-                    Priority routing for critical prescriptions
+                    Fast-track urgent medicine fulfillment requests
                   </div>
                 </div>
               </div>

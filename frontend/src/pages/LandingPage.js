@@ -51,6 +51,53 @@ const LandingPage = () => {
         </div>
       </section>
 
+      {/* Theme Explanation Section - AI Guidance for Physical Work */}
+      <section className="py-20 bg-gradient-to-br from-primary-50 via-blue-50 to-purple-50">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-white rounded-2xl shadow-2xl p-8 md:p-12 border-2 border-primary-200">
+            <div className="text-center mb-8">
+              <div className="inline-block px-4 py-2 bg-primary-100 text-primary-700 rounded-full text-sm font-bold mb-4">
+                🏆 THEME: AI GUIDANCE FOR PHYSICAL WORK
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                Supporting Healthcare Workers During Real Medicine-Handling Tasks
+              </h2>
+            </div>
+            
+            <div className="space-y-6 text-lg text-gray-700 leading-relaxed">
+              <p>
+                <strong>MediGuide AI is designed for physical work in healthcare operations.</strong> Pharmacists, nurses, and clinic staff perform critical medicine-handling tasks every day—dispensing prescriptions, verifying dosages, locating stock across multiple sites, checking substitutes, and managing urgent requests.
+              </p>
+              
+              <p>
+                These are <strong>real-world, hands-on workflows</strong> performed under time pressure in busy healthcare settings. Staff need answers in seconds, not minutes. They need confidence during critical decisions. They need to act quickly without compromising accuracy.
+              </p>
+              
+              <div className="bg-primary-50 border-l-4 border-primary-600 p-6 rounded-r-xl my-6">
+                <p className="font-semibold text-primary-900 mb-2">
+                  🤖 How AI Supports Physical Medicine Work:
+                </p>
+                <ul className="space-y-2 text-gray-800">
+                  <li>• <strong>Real-time stock guidance</strong> during active dispensing (which location has the medicine right now?)</li>
+                  <li>• <strong>Substitute recommendations</strong> when prescribed medicine is unavailable (what's the clinically valid alternative?)</li>
+                  <li>• <strong>Urgency-aware prioritization</strong> for critical cases (where's the fastest reachable source?)</li>
+                  <li>• <strong>Verification support</strong> during physical medicine handling (dosage confirmation, contraindication checks)</li>
+                  <li>• <strong>Workflow optimization</strong> based on time-of-day, queue volume, and low-stock patterns</li>
+                </ul>
+              </div>
+              
+              <p>
+                MediGuide AI reduces workflow friction and improves speed and accuracy during <strong>medicine-related physical operations</strong>. The AI assistant is present throughout the healthcare worker's workflow—from initial medicine lookup to final fulfillment—providing contextual guidance, proactive alerts, and intelligent recommendations at every step.
+              </p>
+              
+              <p className="text-primary-700 font-semibold text-center mt-8 text-xl">
+                This is AI guidance designed specifically for the physical work of healthcare teams.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Problem Section */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -430,10 +477,10 @@ const LandingPage = () => {
       <section className="py-20 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6">
-            Get AI Guidance During Physical Work
+            Empower Your Healthcare Operations With AI Guidance
           </h2>
           <p className="text-xl text-gray-600 mb-8">
-            Join healthcare teams using MediGuide AI for faster, safer, more confident medicine handling.
+            Join pharmacy and clinical teams using MediGuide AI for faster, more accurate medicine-handling workflows.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
@@ -446,7 +493,7 @@ const LandingPage = () => {
               href="#"
               className="inline-block bg-white text-primary-600 px-10 py-4 rounded-lg text-xl font-semibold border-2 border-primary-600 hover:bg-primary-50 transition"
             >
-              Watch Demo
+              Request Demo
             </a>
           </div>
         </div>

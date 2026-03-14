@@ -66,7 +66,7 @@ const PharmacyDashboard = () => {
       <Navbar />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">Pharmacy Dashboard</h1>
+        <h1 className="text-3xl font-bold text-gray-900 mb-8">Staff Operations Console</h1>
 
         {/* Analytics Cards */}
         <div className="grid md:grid-cols-4 gap-6 mb-8">
@@ -75,28 +75,28 @@ const PharmacyDashboard = () => {
               <span className="text-3xl">💊</span>
               <span className="text-3xl font-bold text-primary-600">{analytics.total_medicines}</span>
             </div>
-            <p className="text-sm text-gray-600 font-medium">Total Medicines</p>
+            <p className="text-sm text-gray-600 font-medium">Active Medicine SKUs</p>
           </div>
           <div className="bg-white rounded-xl shadow-md p-6">
             <div className="flex items-center justify-between mb-2">
               <span className="text-3xl">⚠️</span>
               <span className="text-3xl font-bold text-orange-600">{analytics.low_stock_items}</span>
             </div>
-            <p className="text-sm text-gray-600 font-medium">Low Stock Items</p>
+            <p className="text-sm text-gray-600 font-medium">Low Stock Alerts</p>
           </div>
           <div className="bg-white rounded-xl shadow-md p-6">
             <div className="flex items-center justify-between mb-2">
               <span className="text-3xl">📝</span>
               <span className="text-3xl font-bold text-blue-600">{analytics.today_reservations}</span>
             </div>
-            <p className="text-sm text-gray-600 font-medium">Today's Reservations</p>
+            <p className="text-sm text-gray-600 font-medium">Today's Fulfillment Requests</p>
           </div>
           <div className="bg-white rounded-xl shadow-md p-6">
             <div className="flex items-center justify-between mb-2">
               <span className="text-3xl">⏱️</span>
               <span className="text-3xl font-bold text-yellow-600">{analytics.pending_reservations}</span>
             </div>
-            <p className="text-sm text-gray-600 font-medium">Pending Reservations</p>
+            <p className="text-sm text-gray-600 font-medium">Pending Actions</p>
           </div>
         </div>
 
@@ -121,7 +121,7 @@ const PharmacyDashboard = () => {
                   : 'text-gray-600 hover:text-gray-900'
               }`}
             >
-              Reservations
+              Fulfillment Requests
             </button>
           </div>
         </div>
@@ -186,7 +186,7 @@ const PharmacyDashboard = () => {
           <div className="space-y-4">
             {reservations.length === 0 ? (
               <div className="bg-white rounded-xl shadow-md p-12 text-center">
-                <p className="text-gray-600">No reservations yet</p>
+                <p className="text-gray-600">No fulfillment requests pending</p>
               </div>
             ) : (
               reservations.map((res) => (
@@ -194,7 +194,7 @@ const PharmacyDashboard = () => {
                   <div className="flex items-center justify-between mb-4">
                     <div>
                       <h3 className="text-lg font-bold text-gray-900">{res.medicine?.brand}</h3>
-                      <p className="text-sm text-gray-600">Customer: {res.user?.name}</p>
+                      <p className="text-sm text-gray-600">Patient: {res.user?.name}</p>
                     </div>
                     <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
                       res.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
@@ -209,11 +209,11 @@ const PharmacyDashboard = () => {
                   <div className="grid md:grid-cols-2 gap-4 mb-4">
                     <div className="text-sm text-gray-600">
                       <p><span className="font-semibold">Quantity:</span> {res.quantity}</p>
-                      <p><span className="font-semibold">Pickup Time:</span> {new Date(res.pickup_time).toLocaleString()}</p>
+                      <p><span className="font-semibold">Fulfillment Time:</span> {new Date(res.pickup_time).toLocaleString()}</p>
                     </div>
                     <div className="text-sm text-gray-600">
                       <p><span className="font-semibold">Contact:</span> {res.user?.phone}</p>
-                      <p><span className="font-semibold">Reserved:</span> {new Date(res.created_at).toLocaleDateString()}</p>
+                      <p><span className="font-semibold">Requested:</span> {new Date(res.created_at).toLocaleDateString()}</p>
                     </div>
                   </div>
 

@@ -52,11 +52,11 @@ const Login = () => {
 
           {/* Demo Credentials */}
           <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-            <p className="text-sm font-semibold text-blue-900 mb-2">Demo Access Credentials:</p>
+            <p className="text-sm font-semibold text-blue-900 mb-2">Demo Access for Healthcare Roles:</p>
             <div className="text-xs text-blue-800 space-y-1">
-              <p>Staff: user@demo.com / password123</p>
-              <p>Pharmacy: pharmacy@demo.com / password123</p>
-              <p>Admin: admin@demo.com / password123</p>
+              <p>Clinical Staff: user@demo.com / password123</p>
+              <p>Pharmacy Manager: pharmacy@demo.com / password123</p>
+              <p>Operations Admin: admin@demo.com / password123</p>
             </div>
           </div>
 

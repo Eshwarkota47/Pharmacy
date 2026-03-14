@@ -48,13 +48,13 @@ const Navbar = () => {
                       Staff Dashboard
                     </Link>
                     <Link to="/reservations" className="text-gray-700 hover:text-primary-600 transition">
-                      Dispense Queue
+                      Fulfillment Requests
                     </Link>
                   </>
                 )}
                 {user.role === 'pharmacy' && (
                   <Link to="/pharmacy-dashboard" className="text-gray-700 hover:text-primary-600 transition">
-                    Pharmacy Dashboard
+                    Operations Console
                   </Link>
                 )}
                 {user.role === 'admin' && (

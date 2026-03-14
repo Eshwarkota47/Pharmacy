@@ -127,36 +127,36 @@ export const generateSearchGuidance = (result, emergencyMode = false) => {
       guidance.push({
         type: 'urgent',
         icon: '🚨',
-        title: 'Optimal Urgent Source Identified',
-        message: `This location meets all urgent criteria: currently open, in-stock (${inventory.quantity} units), and ${distance} km away.`,
+        title: 'Priority Source for Immediate Fulfillment',
+        message: `This source meets all urgent criteria: currently operational, adequate stock (${inventory.quantity} units), and ${distance} km away.`,
         nextSteps: [
-          'Verify stock availability with pharmacy immediately',
-          'Prepare prescription for immediate dispensing',
-          'If critical, call ahead to confirm exact shelf location'
+          'Verify stock availability with source immediately',
+          'Prepare medicine for immediate dispensing',
+          'If critical case, contact source to confirm exact location'
         ]
       });
     } else if (inventory.status === 'in_stock' && is_open) {
       guidance.push({
         type: 'warning',
         icon: '⚡',
-        title: 'Urgent Alternative Available',
-        message: `Stock confirmed at ${pharmacy_name} (${distance} km). Consider if distance is acceptable for urgent case.`,
+        title: 'Urgent Alternative Source Available',
+        message: `Stock confirmed at ${pharmacy_name} (${distance} km). Assess if distance is acceptable for urgent fulfillment.`,
         recommendations: [
-          'This location is currently open and has confirmed stock',
+          'This source is currently operational with confirmed stock',
           `Travel time: approximately ${Math.ceil(distance * 3)} minutes`,
-          'Consider patient urgency vs. travel time trade-off'
+          'Consider patient urgency vs. travel time for fulfillment'
         ]
       });
     } else if (inventory.status === 'low_stock') {
       guidance.push({
         type: 'warning',
         icon: '⚠️',
-        title: 'Limited Stock for Urgent Case',
-        message: `Only ${inventory.quantity} units available. May not be sufficient for urgent demand.`,
+        title: 'Limited Stock for Urgent Fulfillment',
+        message: `Only ${inventory.quantity} units available. May not meet urgent demand requirements.`,
         nextSteps: [
-          'Check if quantity meets immediate requirement',
-          'Have backup location ready',
-          'Consider reserving immediately to prevent stock-out'
+          'Verify if quantity meets immediate requirement',
+          'Identify backup source as contingency',
+          'Consider creating hold request immediately to prevent stock-out'
         ]
       });
     }
@@ -166,36 +166,36 @@ export const generateSearchGuidance = (result, emergencyMode = false) => {
       guidance.push({
         type: 'success',
         icon: '✅',
-        title: 'Recommended Dispensing Source',
-        message: `${pharmacy_name} is open now with adequate stock (${inventory.quantity} units available).`,
+        title: 'Recommended Fulfillment Source',
+        message: `${pharmacy_name} is operational with adequate stock (${inventory.quantity} units available).`,
         nextSteps: [
-          'Mark for dispensing or reserve for patient',
-          'Verify dosage matches prescription',
-          'Check patient pickup timeline'
+          'Create fulfillment request or mark for dispensing',
+          'Verify dosage matches requirement',
+          'Confirm patient pickup or fulfillment timeline'
         ]
       });
     } else if (inventory.status === 'in_stock' && !is_open) {
       guidance.push({
         type: 'info',
         icon: '🕐',
-        title: 'Stock Available - Currently Closed',
-        message: `${pharmacy_name} has ${inventory.quantity} units but is currently closed.`,
+        title: 'Stock Available - Source Currently Closed',
+        message: `${pharmacy_name} has ${inventory.quantity} units but is currently not operational.`,
         recommendations: [
-          'Reserve for next-day pickup',
-          'Check pharmacy opening hours and inform patient',
-          'Consider alternate open locations if needed immediately'
+          'Create hold request for next-shift fulfillment',
+          'Check source operating hours and inform patient',
+          'Consider alternate operational sources if immediate need'
         ]
       });
     } else if (inventory.status === 'low_stock') {
       guidance.push({
         type: 'warning',
         icon: '📉',
-        title: 'Low Stock Detected',
+        title: 'Low Stock Alert',
         message: `Limited availability: only ${inventory.quantity} units at ${pharmacy_name}.`,
         recommendations: [
-          'Reserve immediately to secure stock',
-          'Consider allocating from alternate branch if ordering multiple units',
-          'Notify inventory manager for restocking'
+          'Create hold request immediately to secure stock',
+          'Consider allocating from alternate source if ordering multiple units',
+          'Notify inventory manager for restocking coordination'
         ]
       });
     }
@@ -206,11 +206,11 @@ export const generateSearchGuidance = (result, emergencyMode = false) => {
     guidance.push({
       type: 'info',
       icon: '📍',
-      title: 'Distance Consideration',
-      message: `This location is ${distance} km away. Check if patient can travel or if delivery is needed.`,
+      title: 'Distance Consideration for Fulfillment',
+      message: `This source is ${distance} km away. Assess fulfillment logistics and patient access.`,
       recommendations: [
-        'Verify patient mobility and transportation',
-        'Check if pharmacy offers delivery service',
+        'Verify patient transportation or staff delivery capability',
+        'Check if source offers inter-facility transfer',
         'Consider closer alternatives if available'
       ]
     });
@@ -227,13 +227,13 @@ export const generateNoStockGuidance = (query, emergencyMode = false) => {
     return {
       type: 'urgent',
       icon: '🚨',
-      title: 'Urgent: No Stock Found',
-      message: `No inventory locations currently have "${query}" in stock. Immediate action required.`,
+      title: 'Priority Alert: No Stock Across Sources',
+      message: `"${query}" is unavailable across all connected sources. Immediate action required.`,
       nextSteps: [
         'Request AI substitute recommendations immediately',
-        'Check therapeutic equivalents with same composition',
+        'Check therapeutic equivalents with matching composition',
         'Contact supplier for emergency procurement if critical',
-        'Notify prescribing physician about substitution need'
+        'Notify prescriber about substitution requirement'
       ]
     };
   }
@@ -242,17 +242,17 @@ export const generateNoStockGuidance = (query, emergencyMode = false) => {
     type: 'recommendation',
     icon: '🤖',
     title: 'AI Substitute Assistance Available',
-    message: `"${query}" is currently out of stock across all locations.`,
+    message: `"${query}" is currently unavailable across all connected sources.`,
     recommendations: [
-      'AI can suggest clinically valid substitutes based on composition and therapeutic use',
+      'AI can suggest clinically valid substitutes based on composition and therapeutic profile',
       'Check generic equivalents or same-dosage alternatives',
-      'Verify substitute with pharmacist before dispensing'
+      'Verify substitute with pharmacist before fulfillment'
     ],
     nextSteps: [
-      'Click "Get AI Substitute Suggestions" below',
+      'Request AI substitute analysis below',
       'Review AI-recommended alternatives with clinical reasoning',
-      'Confirm substitute availability at nearby pharmacies',
-      'Update prescription record with substitution details'
+      'Confirm substitute availability at connected sources',
+      'Update fulfillment record with substitution details'
     ]
   };
 };

@@ -99,8 +99,8 @@ const SearchResults = () => {
                 Medicine Lookup: <span className="text-primary-600">"{query}"</span>
               </h1>
               <p className="text-gray-600 mt-1">
-                {results.length} stock location{results.length !== 1 ? 's' : ''} found
-                {emergencyMode && <span className="ml-2 text-red-600 font-bold">🚨 URGENT PRIORITY MODE</span>}
+                {results.length} source{results.length !== 1 ? 's' : ''} with stock availability
+                {emergencyMode && <span className="ml-2 text-red-600 font-bold">🚨 PRIORITY DISPENSE MODE</span>}
               </p>
             </div>
             <div className="flex items-center gap-3">
@@ -160,21 +160,21 @@ const SearchResults = () => {
             
             <div className="bg-white rounded-xl shadow-md p-12 text-center">
               <div className="text-6xl mb-4">📭</div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">No Stock Found</h3>
+              <h3 className="text-2xl font-bold text-gray-900 mb-2">No Sources With Stock</h3>
               <p className="text-gray-600 mb-6">
-                No inventory locations currently have "{query}" in stock.
+                "{query}" is currently unavailable across all connected sources.
               </p>
               <div className="space-y-3">
                 <button
                   onClick={() => navigate('/dashboard')}
                   className="bg-primary-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary-700 transition mr-3"
                 >
-                  Try Another Lookup
+                  Try Another Search
                 </button>
                 <button
                   className="bg-purple-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-purple-700 transition"
                 >
-                  🤖 Get AI Substitute Suggestions
+                  🤖 Request AI Substitute Guidance
                 </button>
               </div>
             </div>
@@ -185,13 +185,24 @@ const SearchResults = () => {
               <div className="bg-gradient-to-r from-red-500 to-red-700 text-white rounded-xl shadow-lg p-6">
                 <div className="flex items-center space-x-4">
                   <span className="text-5xl">🚨</span>
-                  <div>
-                    <h3 className="text-xl font-bold mb-1">URGENT: Fastest Available Location</h3>
-                    <p className="text-red-100">
-                      {results[0].pharmacy_name} • {results[0].distance} km away • 
-                      {results[0].is_open ? ' CURRENTLY OPEN' : ' CLOSED'} • 
-                      {results[0].inventory.quantity} units available
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold mb-1">PRIORITY DISPENSE: Fastest Available Source</h3>
+                    <p className="text-red-100 mb-2">
+                      {results[0].pharmacy_name} • {results[0].distance} km • 
+                      {results[0].is_open ? ' OPEN NOW' : ' CLOSED'} • 
+                      {results[0].inventory.quantity} units in stock
                     </p>
+                    <div className="flex items-center space-x-4 text-sm">
+                      <div className="bg-white/20 px-3 py-1 rounded-full">
+                        <strong>Urgency Score:</strong> {getUrgencySuitability(results[0]).level}
+                      </div>
+                      <div className="bg-white/20 px-3 py-1 rounded-full">
+                        <strong>Est. Time:</strong> {Math.ceil(results[0].distance * 3)} min
+                      </div>
+                      <div className="bg-white/20 px-3 py-1 rounded-full">
+                        <strong>Action:</strong> {results[0].is_open ? 'Dispense Immediately' : 'Contact Source'}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -385,7 +396,7 @@ const SearchResults = () => {
                         className="flex-1 min-w-[140px] px-4 py-3 bg-primary-600 text-white rounded-lg font-semibold hover:bg-primary-700 transition shadow-sm"
                         disabled={result.inventory.status === 'out_of_stock'}
                       >
-                        ✓ Mark for Dispense
+                        ✓ Mark for Fulfillment
                       </button>
                       <button
                         onClick={() => handleReserveForPatient(result)}
@@ -393,24 +404,24 @@ const SearchResults = () => {
                         disabled={result.inventory.status === 'out_of_stock'}
                         data-testid="reserve-btn"
                       >
-                        📋 Reserve for Patient
+                        📋 Create Hold Request
                       </button>
                       <button
                         onClick={() => navigate(`/pharmacy/${result.pharmacy_id}`)}
                         className="flex-1 min-w-[140px] px-4 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition shadow-sm"
                         data-testid="view-details-btn"
                       >
-                        🏥 View Stock Source
+                        🏥 View Source Details
                       </button>
                       <button
                         className="flex-1 min-w-[140px] px-4 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition shadow-sm"
                       >
-                        🤖 View Substitutes
+                        🤖 Check Substitutes
                       </button>
                       <button
                         className="px-4 py-3 bg-gray-100 text-gray-700 rounded-lg font-semibold hover:bg-gray-200 transition"
                       >
-                        ℹ️ Verify Details
+                        ℹ️ Verify Medicine Info
                       </button>
                     </div>
                   </div>
@@ -461,11 +472,11 @@ const SearchResults = () => {
           <div className="mt-6 bg-white rounded-xl shadow-md p-6">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="font-bold text-gray-900 mb-1">Need Help with Substitutes?</h3>
-                <p className="text-sm text-gray-600">Get AI-powered alternative recommendations if medicine is unavailable</p>
+                <h3 className="font-bold text-gray-900 mb-1">Need Substitute Guidance?</h3>
+                <p className="text-sm text-gray-600">Get AI-powered alternative recommendations for unavailable medicines</p>
               </div>
               <button className="px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition">
-                🤖 Get AI Substitute Guidance
+                🤖 Request AI Substitute Analysis
               </button>
             </div>
           </div>
