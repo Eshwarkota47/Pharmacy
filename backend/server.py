@@ -155,7 +155,7 @@ Return only valid JSON, no additional text."""
         try:
             result = json.loads(response)
             return result.get("substitutes", [])
-        except:
+        except (json.JSONDecodeError, ValueError):
             # If JSON parsing fails, return None to use fallback
             return None
             
@@ -227,6 +227,65 @@ def signup(request: SignupRequest):
     return {"success": True, "user": user_data}
 
 # Medicine Search APIs
+@app.get("/api/medicines/autocomplete")
+def autocomplete_medicines(query: str = Query(..., min_length=1)):
+    """
+    Autocomplete endpoint for medicine search
+    Returns matching medicines by brand name or generic name
+    """
+    if not query or len(query.strip()) < 2:
+        return {"suggestions": []}
+    
+    # Search medicines with ranking
+    # Exact match gets highest priority, then starts-with, then contains
+    pipeline = [
+        {
+            "$match": {
+                "$or": [
+                    {"brand": {"$regex": f"^{query}", "$options": "i"}},  # Starts with
+                    {"generic": {"$regex": f"^{query}", "$options": "i"}},
+                    {"brand": {"$regex": query, "$options": "i"}},  # Contains
+                    {"generic": {"$regex": query, "$options": "i"}}
+                ]
+            }
+        },
+        {
+            "$project": {
+                "_id": 0,
+                "medicine_id": 1,
+                "brand": 1,
+                "generic": 1,
+                "dosage": 1,
+                "composition": 1,
+                # Calculate relevance score
+                "relevance": {
+                    "$add": [
+                        {"$cond": [{"$regexMatch": {"input": "$brand", "regex": f"^{query}", "options": "i"}}, 100, 0]},
+                        {"$cond": [{"$regexMatch": {"input": "$generic", "regex": f"^{query}", "options": "i"}}, 90, 0]},
+                        {"$cond": [{"$regexMatch": {"input": "$brand", "regex": query, "options": "i"}}, 10, 0]},
+                        {"$cond": [{"$regexMatch": {"input": "$generic", "regex": query, "options": "i"}}, 5, 0]}
+                    ]
+                }
+            }
+        },
+        {"$sort": {"relevance": -1}},
+        {"$limit": 10}
+    ]
+    
+    try:
+        medicines = list(medicines_collection.aggregate(pipeline))
+        return {"suggestions": medicines}
+    except Exception:
+        # Fallback to simpler query if aggregation fails
+        medicines = list(medicines_collection.find({
+            "$or": [
+                {"brand": {"$regex": query, "$options": "i"}},
+                {"generic": {"$regex": query, "$options": "i"}}
+            ]
+        }, {"_id": 0, "medicine_id": 1, "brand": 1, "generic": 1, "dosage": 1, "composition": 1}).limit(10))
+        return {"suggestions": medicines}
+
+
 @app.get("/api/medicines/search")
 def search_medicines(
     query: str = Query(..., description="Medicine name to search"),

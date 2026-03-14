@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import { useAuth } from '../AuthContext';
 import AIGuidancePanel, { generateWorkflowGuidance } from '../components/AIGuidancePanel';
+import MedicineSearchInput from '../components/MedicineSearchInput';
 
 const UserDashboard = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -124,28 +125,30 @@ const UserDashboard = () => {
         {/* Main Search Section */}
         <div className="bg-white rounded-2xl shadow-md p-6 mb-6">
           <form onSubmit={handleSearch}>
-            <div className="flex items-center gap-3 mb-4">
-              <div className="flex-1">
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  🔍 Medicine Lookup for Dispensing
-                </label>
-                <input
-                  id="search-input"
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg text-base focus:ring-2 focus:ring-primary-500 focus:border-transparent transition"
-                  placeholder="Type medicine name (brand or generic)..."
-                  data-testid="medicine-search-input"
-                />
+            <div className="mb-4">
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                🔍 Medicine Lookup for Dispensing
+              </label>
+              <div className="flex items-end gap-3">
+                <div className="flex-1">
+                  <MedicineSearchInput
+                    value={searchQuery}
+                    onChange={setSearchQuery}
+                    onSelect={(medicine) => {
+                      setSearchQuery(medicine.brand);
+                    }}
+                    placeholder="Search by brand or generic name..."
+                    autoFocus={false}
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="px-8 py-3 bg-primary-600 text-white rounded-lg font-semibold hover:bg-primary-700 transition shadow-lg whitespace-nowrap"
+                  data-testid="search-submit-button"
+                >
+                  Check Availability
+                </button>
               </div>
-              <button
-                type="submit"
-                className="mt-7 bg-primary-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-primary-700 transition shadow-lg"
-                data-testid="search-submit-button"
-              >
-                Check Availability
-              </button>
             </div>
 
             {/* Urgent Dispensing Mode Toggle */}
