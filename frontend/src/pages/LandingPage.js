@@ -12,16 +12,16 @@ const LandingPage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="text-center">
             <div className="inline-block px-4 py-2 bg-primary-100 text-primary-700 rounded-full text-sm font-semibold mb-6">
-              AI-Powered Workflow Assistant for Healthcare Teams
+              AI Assistant for Healthcare Workers
             </div>
             <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-              Real-time AI Guidance for <span className="text-primary-600">Pharmacy Workflows</span>
+              AI Guidance for <span className="text-primary-600">Physical Work</span>
             </h1>
             <p className="text-xl md:text-2xl text-gray-600 mb-4">
-              Assist pharmacists, nurses, and clinical staff during live operations.
+              Real-time AI assistant for pharmacists, nurses, and clinic staff during medicine-handling tasks.
             </p>
             <p className="text-lg text-gray-500 mb-10 max-w-3xl mx-auto">
-              MediGuide AI helps healthcare workers perform medicine-related tasks faster and more accurately—from prescription fulfillment to inventory lookup, substitute verification, and urgent dispensing.
+              MediGuide AI provides instant guidance while you dispense, verify, locate, and administer medicines in fast-paced healthcare settings. Like having an expert assistant at your side during every task.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
@@ -56,57 +56,161 @@ const LandingPage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Workflow Challenges We Solve
+              Challenges During Active Medicine Handling
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Healthcare workers waste time during critical dispensing workflows—searching for medicines, checking substitutes, verifying inventory, and handling urgent requests.
+              Healthcare workers face real-time challenges while performing physical medicine tasks—dispensing prescriptions, verifying substitutes, locating stock, and handling urgent requests.
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="bg-red-50 p-8 rounded-xl border-2 border-red-200">
               <div className="text-4xl mb-4">⏱️</div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Time Lost During Dispensing</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Dispensing Delays</h3>
               <p className="text-gray-600">
-                Staff spend minutes per prescription searching multiple locations, checking stock, and verifying substitutes manually.
+                Staff waste 3-5 minutes per prescription manually searching locations, verifying details, and checking alternatives during active dispensing.
+              </p>
+            </div>
+            <div className="bg-orange-50 p-8 rounded-xl border-2 border-orange-200">
+              <div className="text-4xl mb-4">❓</div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Substitution Confusion</h3>
+              <p className="text-gray-600">
+                Without real-time guidance, staff struggle to identify valid substitutes quickly, leading to delays or incorrect alternatives during critical moments.
+              </p>
+            </div>
+            <div className="bg-red-50 p-8 rounded-xl border-2 border-red-200">
+              <div className="text-4xl mb-4">📍</div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Inventory Fragmentation</h3>
+              <p className="text-gray-600">
+                Medicine stock scattered across multiple locations forces staff to make phone calls, walk between sites, or delay patient care to locate items.
               </p>
             </div>
             <div className="bg-orange-50 p-8 rounded-xl border-2 border-orange-200">
               <div className="text-4xl mb-4">❌</div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Dispensing Errors</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Medicine-Handling Errors</h3>
               <p className="text-gray-600">
-                Manual lookups and lack of real-time guidance increase the risk of incorrect substitutes and stock errors.
+                Under pressure, staff may select wrong dosages, miss contraindications, or dispense incorrect alternatives without verification support.
               </p>
             </div>
             <div className="bg-red-50 p-8 rounded-xl border-2 border-red-200">
               <div className="text-4xl mb-4">🚨</div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Urgent Cases Delayed</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Urgent Case Pressure</h3>
               <p className="text-gray-600">
-                Critical prescriptions get delayed when staff can't quickly identify available stock or valid alternatives.
+                Critical situations demand instant decisions about availability and alternatives, but staff lack tools to get immediate, confident answers.
+              </p>
+            </div>
+            <div className="bg-orange-50 p-8 rounded-xl border-2 border-orange-200">
+              <div className="text-4xl mb-4">📞</div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Coordination Overhead</h3>
+              <p className="text-gray-600">
+                Staff spend excessive time coordinating with other departments, making calls, and waiting for information during active patient care.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="py-16 bg-gray-50" data-testid="features-section">
+      {/* How AI Assists Physical Work */}
+      <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              AI-Powered Workflow Features
+              How AI Assists You During Physical Tasks
             </h2>
             <p className="text-xl text-gray-600">
-              Built specifically for pharmacy and clinical staff during live operations.
+              MediGuide AI acts as your real-time assistant during medicine-handling work
+            </p>
+          </div>
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="bg-white p-8 rounded-xl shadow-md">
+              <div className="flex items-start space-x-4">
+                <div className="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center text-2xl">
+                  💊
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">While Dispensing Prescriptions</h3>
+                  <p className="text-gray-600 mb-3">
+                    <span className="font-semibold">Scenario:</span> You're at the counter with a prescription in hand.
+                  </p>
+                  <p className="text-gray-600">
+                    <span className="font-semibold">AI Guidance:</span> Instantly see which exact locations have the medicine in stock, verify dosage details, and get substitute options if unavailable—all in under 5 seconds.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white p-8 rounded-xl shadow-md">
+              <div className="flex items-start space-x-4">
+                <div className="flex-shrink-0 w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center text-2xl">
+                  🤖
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">When Stock is Unavailable</h3>
+                  <p className="text-gray-600 mb-3">
+                    <span className="font-semibold">Scenario:</span> The prescribed medicine is out of stock.
+                  </p>
+                  <p className="text-gray-600">
+                    <span className="font-semibold">AI Guidance:</span> AI analyzes composition, dosage, and therapeutic use to suggest clinically valid substitutes with reasoning—helping you make confident decisions without calling a pharmacist.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white p-8 rounded-xl shadow-md">
+              <div className="flex items-start space-x-4">
+                <div className="flex-shrink-0 w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center text-2xl">
+                  🏥
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">During Ward Rounds</h3>
+                  <p className="text-gray-600 mb-3">
+                    <span className="font-semibold">Scenario:</span> Nurse needs to administer medicine but unsure of availability.
+                  </p>
+                  <p className="text-gray-600">
+                    <span className="font-semibold">AI Guidance:</span> Quickly check if medicine is available in ward pharmacy, main pharmacy, or emergency stock—without leaving patient bedside or making phone calls.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white p-8 rounded-xl shadow-md border-2 border-red-200">
+              <div className="flex items-start space-x-4">
+                <div className="flex-shrink-0 w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center text-2xl">
+                  🚨
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">In Urgent Situations</h3>
+                  <p className="text-gray-600 mb-3">
+                    <span className="font-semibold">Scenario:</span> Emergency case needs immediate medicine access.
+                  </p>
+                  <p className="text-gray-600">
+                    <span className="font-semibold">AI Guidance:</span> Urgent mode instantly highlights nearest available stock and fastest retrieval path—helping you act within seconds rather than minutes.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section className="py-16 bg-white" data-testid="features-section">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Real-Time Guidance Features
+            </h2>
+            <p className="text-xl text-gray-600">
+              AI-powered assistance during your active medicine-handling work
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition">
+            <div className="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition border-2 border-primary-100">
               <div className="flex items-center justify-center w-14 h-14 bg-primary-100 rounded-lg mb-4">
-                <span className="text-3xl">🔍</span>
+                <span className="text-3xl">⚡</span>
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Instant Medicine Lookup</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">Instant Availability Check</h3>
               <p className="text-gray-600">
-                Search by brand or generic name during prescription fulfillment. See real-time availability across all inventory locations instantly.
+                Type medicine name while holding prescription. Get instant stock locations across all sites—no phone calls, no waiting, no delays.
               </p>
             </div>
             <div className="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition border-2 border-purple-200">
@@ -115,86 +219,95 @@ const LandingPage = () => {
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-3">AI Substitute Guidance</h3>
               <p className="text-gray-600">
-                Get intelligent substitute recommendations with clinical context when the exact medicine is unavailable—powered by advanced AI.
+                When stock is out, AI suggests valid substitutes with clinical reasoning—same generic, similar composition, or therapeutic alternatives with confidence.
               </p>
             </div>
-            <div className="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition">
+            <div className="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition border-2 border-green-200">
               <div className="flex items-center justify-center w-14 h-14 bg-green-100 rounded-lg mb-4">
                 <span className="text-3xl">✓</span>
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Medicine Verification</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">On-the-Spot Verification</h3>
               <p className="text-gray-600">
-                Verify medicine details, dosage, composition, and alternatives quickly during dispensing to reduce errors.
+                Verify dosage, composition, and medicine details in real-time during dispensing. Reduce errors and increase confidence during physical work.
               </p>
             </div>
             <div className="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition border-2 border-red-200">
               <div className="flex items-center justify-center w-14 h-14 bg-red-100 rounded-lg mb-4">
                 <span className="text-3xl">🚨</span>
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Urgent Dispensing Mode</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">Urgent Task Support</h3>
               <p className="text-gray-600">
-                Priority mode for critical cases—instantly shows nearest available stock and fastest fulfillment options.
+                For critical cases, urgent mode instantly shows nearest stock and fastest path—helping you complete urgent dispensing in seconds.
               </p>
             </div>
-            <div className="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition">
+            <div className="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition border-2 border-blue-200">
               <div className="flex items-center justify-center w-14 h-14 bg-blue-100 rounded-lg mb-4">
-                <span className="text-3xl">📊</span>
+                <span className="text-3xl">📍</span>
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Multi-Location Inventory</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">Multi-Site Inventory View</h3>
               <p className="text-gray-600">
-                Check stock levels across multiple pharmacy locations, departments, or branches from one interface.
+                See stock across all pharmacy sites, ward dispensaries, and storage locations from one screen—no more walking or calling around.
               </p>
             </div>
-            <div className="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition">
-              <div className="flex items-center justify-center w-14 h-14 bg-green-100 rounded-lg mb-4">
+            <div className="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition border-2 border-gray-200">
+              <div className="flex items-center justify-center w-14 h-14 bg-gray-100 rounded-lg mb-4">
                 <span className="text-3xl">📋</span>
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Prescription Queue Management</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">Work Queue Management</h3>
               <p className="text-gray-600">
-                Manage prescription fulfillment workflow with queue tracking, status updates, and priority handling.
+                Track prescriptions in your dispensing queue, prioritize urgent cases, and manage workflow during busy periods efficiently.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* How It Works Section */}
-      <section className="py-16 bg-white">
+      {/* Staff Workflow Section */}
+      <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              How Staff Use MediGuide AI
+              How Staff Use MediGuide AI During Work
             </h2>
             <p className="text-xl text-gray-600">
-              Seamlessly integrated into daily pharmacy and clinical workflows
+              Seamlessly integrated into physical medicine-handling workflows
             </p>
           </div>
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-4 gap-6">
             <div className="text-center">
               <div className="flex items-center justify-center w-16 h-16 bg-primary-600 text-white rounded-full text-2xl font-bold mx-auto mb-4">
                 1
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Receive Prescription</h3>
-              <p className="text-gray-600">
-                Staff receives prescription or dispensing request from patient or provider
+              <h3 className="text-lg font-bold text-gray-900 mb-2">Receive Task</h3>
+              <p className="text-gray-600 text-sm">
+                Prescription arrives or patient requests medicine
               </p>
             </div>
             <div className="text-center">
               <div className="flex items-center justify-center w-16 h-16 bg-primary-600 text-white rounded-full text-2xl font-bold mx-auto mb-4">
                 2
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Check Availability & Guidance</h3>
-              <p className="text-gray-600">
-                Lookup medicine availability, get AI substitute suggestions if needed, verify details
+              <h3 className="text-lg font-bold text-gray-900 mb-2">Get AI Guidance</h3>
+              <p className="text-gray-600 text-sm">
+                Check availability, verify details, get substitutes if needed
               </p>
             </div>
             <div className="text-center">
               <div className="flex items-center justify-center w-16 h-16 bg-primary-600 text-white rounded-full text-2xl font-bold mx-auto mb-4">
                 3
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Fulfill & Dispense</h3>
-              <p className="text-gray-600">
-                Complete dispensing workflow with confidence, accuracy, and speed
+              <h3 className="text-lg font-bold text-gray-900 mb-2">Execute Task</h3>
+              <p className="text-gray-600 text-sm">
+                Dispense, administer, or process with confidence
+              </p>
+            </div>
+            <div className="text-center">
+              <div className="flex items-center justify-center w-16 h-16 bg-primary-600 text-white rounded-full text-2xl font-bold mx-auto mb-4">
+                4
+              </div>
+              <h3 className="text-lg font-bold text-gray-900 mb-2">Complete</h3>
+              <p className="text-gray-600 text-sm">
+                Task done faster, safer, and with fewer errors
               </p>
             </div>
           </div>
@@ -204,58 +317,72 @@ const LandingPage = () => {
       {/* Benefits Section */}
       <section className="py-16 bg-gradient-to-r from-primary-600 to-primary-800 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-12">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Benefits for Healthcare Operations
+            </h2>
+          </div>
+          <div className="grid md:grid-cols-3 gap-8">
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                For Pharmacists & Dispensary Staff
-              </h2>
+              <h3 className="text-2xl font-bold mb-6">For Pharmacies</h3>
               <ul className="space-y-4">
                 <li className="flex items-start">
                   <span className="text-2xl mr-3">✓</span>
-                  <span className="text-lg">Reduce prescription fulfillment time by up to 60%</span>
+                  <span className="text-lg">60% faster prescription fulfillment during peak hours</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-2xl mr-3">✓</span>
-                  <span className="text-lg">AI-powered substitute guidance reduces dispensing errors</span>
+                  <span className="text-lg">Reduce dispensing errors with AI verification support</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-2xl mr-3">✓</span>
-                  <span className="text-lg">Real-time inventory visibility across all locations</span>
+                  <span className="text-lg">Handle urgent cases more efficiently with priority mode</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-2xl mr-3">✓</span>
-                  <span className="text-lg">Handle urgent cases faster with priority mode</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-2xl mr-3">✓</span>
-                  <span className="text-lg">Verify medicine details instantly during workflow</span>
+                  <span className="text-lg">Less staff time wasted searching and coordinating</span>
                 </li>
               </ul>
             </div>
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                For Nurses & Clinical Staff
-              </h2>
+              <h3 className="text-2xl font-bold mb-6">For Clinics & Hospitals</h3>
               <ul className="space-y-4">
                 <li className="flex items-start">
                   <span className="text-2xl mr-3">✓</span>
-                  <span className="text-lg">Quick medicine availability checks during ward rounds</span>
+                  <span className="text-lg">Nurses get instant guidance during medicine administration</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-2xl mr-3">✓</span>
-                  <span className="text-lg">Identify valid substitutes when stock is unavailable</span>
+                  <span className="text-lg">Reduce coordination overhead between departments</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-2xl mr-3">✓</span>
-                  <span className="text-lg">Support accurate medicine administration</span>
+                  <span className="text-lg">Multi-site inventory visibility from any location</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-2xl mr-3">✓</span>
-                  <span className="text-lg">Coordinate with pharmacy on urgent medicine needs</span>
+                  <span className="text-lg">Support safer medicine-handling practices</span>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-2xl font-bold mb-6">For Healthcare Staff</h3>
+              <ul className="space-y-4">
+                <li className="flex items-start">
+                  <span className="text-2xl mr-3">✓</span>
+                  <span className="text-lg">Work with more confidence during physical tasks</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-2xl mr-3">✓</span>
-                  <span className="text-lg">Reduce phone calls and manual coordination time</span>
+                  <span className="text-lg">Get expert-level guidance in seconds, not minutes</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-2xl mr-3">✓</span>
+                  <span className="text-lg">Reduce stress during urgent and high-pressure situations</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-2xl mr-3">✓</span>
+                  <span className="text-lg">Focus on patient care instead of administrative tasks</span>
                 </li>
               </ul>
             </div>
@@ -268,33 +395,33 @@ const LandingPage = () => {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="text-6xl mb-6">🚨</div>
           <h2 className="text-3xl md:text-5xl font-bold mb-6">
-            Urgent Dispensing Mode
+            Urgent Task Support
           </h2>
           <p className="text-xl md:text-2xl mb-8">
-            For critical cases where every second counts:
+            When handling critical cases during emergencies or high-pressure situations:
           </p>
           <div className="grid md:grid-cols-3 gap-6 mb-8">
             <div className="bg-white/10 backdrop-blur-sm p-6 rounded-xl">
-              <div className="text-3xl mb-2">📍</div>
-              <div className="font-bold text-lg mb-1">Nearest Stock First</div>
-              <p className="text-sm">Instantly shows closest available location</p>
+              <div className="text-3xl mb-2">⚡</div>
+              <div className="font-bold text-lg mb-1">Instant Results</div>
+              <p className="text-sm">AI prioritizes nearest available stock locations first</p>
             </div>
             <div className="bg-white/10 backdrop-blur-sm p-6 rounded-xl">
-              <div className="text-3xl mb-2">⚡</div>
-              <div className="font-bold text-lg mb-1">Priority Routing</div>
-              <p className="text-sm">Optimized for fastest fulfillment path</p>
+              <div className="text-3xl mb-2">🎯</div>
+              <div className="font-bold text-lg mb-1">Fastest Path</div>
+              <p className="text-sm">Shows quickest retrieval route and location</p>
             </div>
             <div className="bg-white/10 backdrop-blur-sm p-6 rounded-xl">
               <div className="text-3xl mb-2">✅</div>
-              <div className="font-bold text-lg mb-1">Guaranteed Availability</div>
-              <p className="text-sm">Only shows confirmed in-stock items</p>
+              <div className="font-bold text-lg mb-1">Confirmed Stock</div>
+              <p className="text-sm">Only displays verified in-stock items</p>
             </div>
           </div>
           <Link
             to="/signup"
             className="inline-block bg-white text-red-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-100 transition shadow-2xl"
           >
-            Try Urgent Mode
+            Experience Urgent Mode
           </Link>
         </div>
       </section>
@@ -303,17 +430,25 @@ const LandingPage = () => {
       <section className="py-20 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6">
-            Ready to Enhance Your Workflow?
+            Get AI Guidance During Physical Work
           </h2>
           <p className="text-xl text-gray-600 mb-8">
-            Join healthcare teams using MediGuide AI to improve dispensing accuracy and speed.
+            Join healthcare teams using MediGuide AI for faster, safer, more confident medicine handling.
           </p>
-          <Link
-            to="/signup"
-            className="inline-block bg-primary-600 text-white px-10 py-4 rounded-lg text-xl font-semibold hover:bg-primary-700 transition shadow-lg hover:shadow-xl"
-          >
-            Start Free Trial
-          </Link>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link
+              to="/signup"
+              className="inline-block bg-primary-600 text-white px-10 py-4 rounded-lg text-xl font-semibold hover:bg-primary-700 transition shadow-lg hover:shadow-xl"
+            >
+              Start Free Trial
+            </Link>
+            <a
+              href="#"
+              className="inline-block bg-white text-primary-600 px-10 py-4 rounded-lg text-xl font-semibold border-2 border-primary-600 hover:bg-primary-50 transition"
+            >
+              Watch Demo
+            </a>
+          </div>
         </div>
       </section>
 
@@ -324,7 +459,7 @@ const LandingPage = () => {
             <div>
               <h3 className="text-xl font-bold mb-4">MediGuide AI</h3>
               <p className="text-gray-400">
-                Real-time AI guidance for pharmacy and clinical workflows.
+                AI guidance for physical medicine-handling work in healthcare settings.
               </p>
             </div>
             <div>
@@ -344,11 +479,11 @@ const LandingPage = () => {
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold mb-4">Support</h4>
+              <h4 className="font-semibold mb-4">Resources</h4>
               <ul className="space-y-2 text-gray-400">
-                <li><Link to="/" className="hover:text-white transition">Help Center</Link></li>
-                <li><Link to="/" className="hover:text-white transition">Privacy Policy</Link></li>
-                <li><Link to="/" className="hover:text-white transition">Terms of Service</Link></li>
+                <li><Link to="/" className="hover:text-white transition">Documentation</Link></li>
+                <li><Link to="/" className="hover:text-white transition">Training</Link></li>
+                <li><Link to="/" className="hover:text-white transition">Support</Link></li>
               </ul>
             </div>
           </div>
